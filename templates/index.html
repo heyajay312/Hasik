@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <div class="form-container">
+        <h2>Enter Date</h2>
+        <form id="dateForm">
+            <input type="number" class="form-input" id="yearInput" name="year" placeholder="Year">
+            <input type="number" class="form-input" id="monthInput" name="month" placeholder="Month">
+            <input type="number" class="form-input" id="dayInput" name="day" placeholder="Day">
+            <br>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </div>
+    <br>
+
+    <script>
+        function submitForm() {
+            const year = document.getElementById('yearInput').value;
+            const month = document.getElementById('monthInput').value;
+            const day = document.getElementById('dayInput').value;
+
+            if (!year && !month && !day) {
+                alert('Please enter at least one value (Year, Month, or Day).');
+                return false;
+            }
+            if (year && (year < 0 || year > 2023)) {
+                alert('Invalid Year');
+                return false;
+            }
+            if (month && (month < 1 || month > 12)) {
+                alert('Invalid Month');
+                return false;
+            }
+            if (day && (day < 1 || day > 31)) {
+                alert('Invalid Day');
+                return false;
+            }
+            return true; // Allows the form to be submitted
+        }
+    </script>
+
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand mb-0 h1" href="/">Historical Events</a>
+    </nav>
+    <div class="container event-container">
+        <h2>Historical Events</h2>
+        {% if output %}
+            {% for event in output %}
+                <div class="event-item">
+                    <p><strong>{{ event["day"] }}/{{ event["month"] }}/{{ event["year"] }}:</strong> {{ event["event"] }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="acknowledgment">
+            <p>Data provided by <a href="https://api-ninjas.com/">API Ninjas</a></p>
+        </div>
+        <div class="footer">
+            <a href="https://x.com/heyajay312"><img src="/static/images/x.png" alt="Twitter"></a>
+            <a href="https://www.linkedin.com/in/heyajay"><img src="/static/images/linkedin.png" alt="Instagram"></a>
+            <a href="https://www.github.com/heyajay312"><img src="/static/images/github.png" alt="YouTube"></a>
+        </div>
+    </div>
+{% endblock %}
